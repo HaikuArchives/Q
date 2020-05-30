@@ -121,6 +121,9 @@ void    TVolumenob::MessageReceived(BMessage* message){
                 case 'mada': 
                         HandleMouse();
                         break;
+
+		default:
+			BControl::MessageReceived(message);
      } 
 
 
