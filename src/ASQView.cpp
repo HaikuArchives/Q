@@ -1,6 +1,19 @@
 // 
 // ASQView.cpp 
 // 
+
+#include <Alert.h>
+#include <Box.h>
+#include <PopUpMenu.h>
+#include <Menu.h>
+#include <MenuField.h>
+#include <MenuItem.h>
+#include <Message.h>
+#include <MidiDefs.h>
+#include <Rect.h>
+#include <StorageKit.h>
+#include <TextControl.h>
+
 #include "Bitmaps.h"
 #include "ASQView.h"
 #include "TVolumenob.h"
@@ -12,17 +25,6 @@
 #include "TMenuField.h"
 #include "TMidioutMenuField.h"
 #include "TOutputMenuField.h"
-#include <Alert.h>
-#include <Box.h>
-#include <PopUpMenu.h>
-#include <Menu.h>
-#include <MenuItem.h>
-#include <MenuField.h>
-#include <Rect.h>
-#include <Message.h>
-#include <MidiDefs.h>
-#include <TextControl.h>
-#include <StorageKit.h>
 
 ASQView::ASQView( BRect frame, const char* name ) 
     :BView( frame, "sampleview", B_FOLLOW_ALL, B_WILL_DRAW ) 

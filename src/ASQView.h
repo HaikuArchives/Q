@@ -4,10 +4,11 @@
 #ifndef ASQVIEW_H
 #define ASQVIEW_H
 
-#include <View.h>
 #include <Beep.h>
+#include <View.h>
+
 #include "TVolumenob.h"
-#include	"TSelectnob.h"
+#include "TSelectnob.h"
 #include "TLamp.h"
 #include "TTimer.h"
 #include "TOutput.h"

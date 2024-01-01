@@ -2,8 +2,8 @@
 //
 #include <Application.h>
 #include <InterfaceKit.h>
-#include <StorageKit.h>
 #include <Roster.h>
+#include <StorageKit.h>
 
 #include "ASQWindow.h"
 
