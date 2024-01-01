@@ -5,6 +5,7 @@
 #define TTIMER_H
 
 #include <Looper.h>
+#include <View.h>
 
 class BLooper;
 

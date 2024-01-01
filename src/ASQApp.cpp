@@ -13,12 +13,12 @@
 #include <Roster.h>
 #include <Path.h>
 
+#include <private/interface/AboutWindow.h>
 
 ASQApp::ASQApp():BApplication( MY_SIG ) 
 { 
     BRect frame; 
     char name[50];
-//   	frame.Set( 5, 50, 640, 320 ); 
    	frame.Set( 100, 100, 735, 370 ); 
     sprintf(name,"Q # %ld",Team());
     window = new ASQWindow( frame, name ); 
@@ -30,7 +30,8 @@ ASQApp::ASQApp():BApplication( MY_SIG )
     
 } 
 
-void	ASQApp::MessageReceived(BMessage *msg)
+void
+ASQApp::MessageReceived(BMessage *msg)
 {
 	switch (msg->what) 
 	{
@@ -57,15 +58,17 @@ void	ASQApp::MessageReceived(BMessage *msg)
 	}
 }
 
-void ASQApp::AboutRequested(void){
-
-	BAlert *myAlert;
-	myAlert = new BAlert("about", "Q version 1.1\nAnalogue Sequencer Emulator\n\nby Masaaki Tani\nrevised by Dr. Hartmut Reh","OK"); 
-	myAlert->SetShortcut(0, B_OK); 
-	myAlert->Go();
+void
+ASQApp::AboutRequested(void)
+{
+	BAboutWindow* about = new BAboutWindow("Q", MY_SIG);
+       about->AddExtraInfo("Analogue Sequencer Emulator\n\n"
+       "by Masaaki Tani\nrevised by Dr. Hartmut Reh");
+       about->Show();
 }
 
-void ASQApp::RefsReceived(BMessage *message)
+void
+ASQApp::RefsReceived(BMessage *message)
 {
 
 	if(IsLaunching()){
@@ -74,7 +77,9 @@ void ASQApp::RefsReceived(BMessage *message)
 	
 }
 
-void ASQApp::RefRequested(void){
+void
+ASQApp::RefRequested(void)
+{
 
 	BMessage* m;
 	if (refmsg!=NULL)
@@ -85,7 +90,8 @@ void ASQApp::RefRequested(void){
 
 }
 
-int main() 
+int
+main() 
 { 
     ASQApp* app; 
     app = new ASQApp(); 

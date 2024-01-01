@@ -3,13 +3,15 @@
 //
 #ifndef TOUTPUT_H
 #define TOUTPUT_H
+
 #include <stdio.h>
+#include <Beep.h>
 #include <Looper.h>
-#include <Synth.h>
 #include <MidiSynth.h>
 #include <MidiProducer.h>
 #include <MidiConsumer.h>
-#include <Beep.h>
+#include <Synth.h>
+#include <View.h>
 
 class BLooper;
 class BMidiSynth;
