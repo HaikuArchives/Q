@@ -1,13 +1,11 @@
 // ASQWindow.cpp
 //
-#include "ASQWindow.h"
-#include <InterfaceKit.h>
 #include <Application.h>
+#include <InterfaceKit.h>
 #include <StorageKit.h>
 #include <Roster.h>
 
-//#include <Messenger.h>
-
+#include "ASQWindow.h"
 
 ASQWindow::ASQWindow( BRect frame , const char* n)
     :BWindow( frame, n, B_TITLED_WINDOW, B_NOT_RESIZABLE|B_NOT_ZOOMABLE )
@@ -104,16 +102,19 @@ ASQWindow::ASQWindow( BRect frame , const char* n)
 
 }
 
-bool ASQWindow::QuitRequested(){
+bool
+ASQWindow::QuitRequested()
+{
 	view->timer->PostMessage( B_QUIT_REQUESTED );
  	snooze(20000);
  	view->output->PostMessage( B_QUIT_REQUESTED );
  	snooze(20000);
- 	(BApplication*)be_app->PostMessage( B_QUIT_REQUESTED );
+ 	be_app->PostMessage( B_QUIT_REQUESTED );
     return true;
 }
 
-void ASQWindow::MessageReceived(BMessage* message)
+void
+ASQWindow::MessageReceived(BMessage* message)
 {
 
 	switch(message->what)
@@ -187,7 +188,8 @@ void ASQWindow::MessageReceived(BMessage* message)
 
 
 
-bool MyOpenFilter :: Filter(const entry_ref* ref,BNode* node,
+bool
+MyOpenFilter :: Filter(const entry_ref* ref,BNode* node,
 														struct stat_beos* st,const char* filetype)
 {
 	// hier wird eine Filterfunktion implementiert
