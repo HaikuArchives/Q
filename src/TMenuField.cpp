@@ -13,7 +13,8 @@
 #include "TMenuField.h"
 
 TMenuField :: TMenuField(BRect frame, const char *name, const char *label, BMenu *menu, uint32 command)
-: BMenuField(frame, name,label,menu)
+	:
+	BMenuField(frame, name,label,menu)
 { 
 	cmd = command;
 	BMessage* m;
@@ -23,7 +24,8 @@ TMenuField :: TMenuField(BRect frame, const char *name, const char *label, BMenu
 	item->SetMarked(true);
     Menu()->AddItem(item);
 }  
-void	TMenuField :: MouseDown(BPoint point) 
+void
+TMenuField::MouseDown(BPoint point) 
 {
 	BList applist;
 	int32 appcount;

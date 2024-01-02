@@ -1,25 +1,31 @@
 // 
 // ASQApp.cpp 
 // 
-#include "ASQApp.h" 
-#include "ASQWindow.h" 
 
-#include <List.h>
 #include <Alert.h>
-#include <Message.h>
+#include <Catalog.h>
 #include <FilePanel.h>
-#include <stdio.h>
+#include <List.h>
+#include <Message.h>
 #include <Mime.h>
-#include <Roster.h>
 #include <Path.h>
+#include <Roster.h>
+
+#include <stdio.h>
+
+#include "ASQApp.h" 
+#include "ASQWindow.h"
 
 #include <private/interface/AboutWindow.h>
+
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ASQApp"
 
 ASQApp::ASQApp():BApplication( MY_SIG ) 
 { 
     BRect frame; 
     char name[50];
-   	frame.Set( 100, 100, 735, 370 ); 
+   	frame.Set( 100, 100, 735, 370 );
     sprintf(name,"Q # %ld",Team());
     window = new ASQWindow( frame, name ); 
     window->Show(); 
@@ -62,8 +68,8 @@ void
 ASQApp::AboutRequested(void)
 {
 	BAboutWindow* about = new BAboutWindow("Q", MY_SIG);
-       about->AddExtraInfo("Analogue Sequencer Emulator\n\n"
-       "by Masaaki Tani\nrevised by Dr. Hartmut Reh");
+       about->AddExtraInfo(B_TRANSLATE("Analogue Sequencer Emulator\n\n"
+       "by Masaaki Tani\nrevised by Dr. Hartmut Reh"));
        about->Show();
 }
 
