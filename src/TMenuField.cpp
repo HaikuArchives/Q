@@ -2,17 +2,19 @@
 //TMenuField.cpp
 //
 
-#include "TMenuField.h"
-#include	<Message.h>
-#include	<MenuItem.h>
 #include <Application.h>
-#include <Roster.h>
 #include <List.h>
+#include <MenuItem.h>
+#include <Message.h>
+#include <Roster.h>
+
 #include <stdio.h>
 
+#include "TMenuField.h"
 
 TMenuField :: TMenuField(BRect frame, const char *name, const char *label, BMenu *menu, uint32 command)
-: BMenuField(frame, name,label,menu)
+	:
+	BMenuField(frame, name,label,menu)
 { 
 	cmd = command;
 	BMessage* m;
@@ -22,7 +24,8 @@ TMenuField :: TMenuField(BRect frame, const char *name, const char *label, BMenu
 	item->SetMarked(true);
     Menu()->AddItem(item);
 }  
-void	TMenuField :: MouseDown(BPoint point) 
+void
+TMenuField::MouseDown(BPoint point) 
 {
 	BList applist;
 	int32 appcount;
@@ -42,8 +45,8 @@ void	TMenuField :: MouseDown(BPoint point)
 		removingitem=Menu()->RemoveItem(i);
 	}
 	for(i=0;i<appcount;i++){
-	
-		team = (team_id) applist.ItemAt(i);
+
+		team = *reinterpret_cast<team_id*>(applist.ItemAt(i));
         if(team != be_app->Team()){
 			m=new BMessage(cmd);
 			m->AddInt32("team",(int32)team);

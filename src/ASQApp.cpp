@@ -1,25 +1,31 @@
 // 
 // ASQApp.cpp 
 // 
-#include "ASQApp.h" 
-#include "ASQWindow.h" 
 
-#include <List.h>
 #include <Alert.h>
-#include <Message.h>
+#include <Catalog.h>
 #include <FilePanel.h>
-#include <stdio.h>
+#include <List.h>
+#include <Message.h>
 #include <Mime.h>
-#include <Roster.h>
 #include <Path.h>
+#include <Roster.h>
 
+#include <stdio.h>
+
+#include "ASQApp.h" 
+#include "ASQWindow.h"
+
+#include <private/interface/AboutWindow.h>
+
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ASQApp"
 
 ASQApp::ASQApp():BApplication( MY_SIG ) 
 { 
     BRect frame; 
     char name[50];
-//   	frame.Set( 5, 50, 640, 320 ); 
-   	frame.Set( 100, 100, 735, 370 ); 
+   	frame.Set( 100, 100, 735, 370 );
     sprintf(name,"Q # %ld",Team());
     window = new ASQWindow( frame, name ); 
     window->Show(); 
@@ -30,7 +36,8 @@ ASQApp::ASQApp():BApplication( MY_SIG )
     
 } 
 
-void	ASQApp::MessageReceived(BMessage *msg)
+void
+ASQApp::MessageReceived(BMessage *msg)
 {
 	switch (msg->what) 
 	{
@@ -57,15 +64,17 @@ void	ASQApp::MessageReceived(BMessage *msg)
 	}
 }
 
-void ASQApp::AboutRequested(void){
-
-	BAlert *myAlert;
-	myAlert = new BAlert("about", "Q version 1.1\nAnalogue Sequencer Emulator\n\nby Masaaki Tani\nrevised by Dr. Hartmut Reh","OK"); 
-	myAlert->SetShortcut(0, B_OK); 
-	myAlert->Go();
+void
+ASQApp::AboutRequested(void)
+{
+	BAboutWindow* about = new BAboutWindow("Q", MY_SIG);
+       about->AddExtraInfo(B_TRANSLATE("Analogue Sequencer Emulator\n\n"
+       "by Masaaki Tani\nrevised by Dr. Hartmut Reh"));
+       about->Show();
 }
 
-void ASQApp::RefsReceived(BMessage *message)
+void
+ASQApp::RefsReceived(BMessage *message)
 {
 
 	if(IsLaunching()){
@@ -74,7 +83,9 @@ void ASQApp::RefsReceived(BMessage *message)
 	
 }
 
-void ASQApp::RefRequested(void){
+void
+ASQApp::RefRequested(void)
+{
 
 	BMessage* m;
 	if (refmsg!=NULL)
@@ -85,7 +96,8 @@ void ASQApp::RefRequested(void){
 
 }
 
-int main() 
+int
+main() 
 { 
     ASQApp* app; 
     app = new ASQApp(); 

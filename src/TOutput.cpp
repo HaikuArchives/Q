@@ -4,18 +4,20 @@
 
 
 
-#include "TOutput.h"
-#include <Message.h>
 #include <Application.h>
 #include <AppFileInfo.h>
 #include <Bitmap.h>
 #include <File.h>
-#include <Roster.h>
+#include <Message.h>
 #include <MidiRoster.h>
-//#include <iostream.h>
+#include <Roster.h>
+
+
+#include "TOutput.h"
 
 TOutput :: TOutput(BView* view, const char* name)
-    		 : BLooper(NULL, B_REAL_TIME_PRIORITY)
+	:
+	BLooper(NULL, B_REAL_TIME_PRIORITY)
 { 
 	playing=false;
 	target=view;
@@ -83,12 +85,14 @@ TOutput :: TOutput(BView* view, const char* name)
 	
 }
 
-void	TOutput::SetTarget(BLooper* looper)
+void
+TOutput::SetTarget(BLooper* looper)
 {
 	targetlooper=looper;
 }
 
-void    TOutput::MessageReceived(BMessage* message)
+void
+TOutput::MessageReceived(BMessage* message)
 {
 	int i;
 	BMessage* msg;
@@ -382,7 +386,8 @@ void	TOutput::HandleData(int	CH, int number, int data)
 	voldata[CH][number]=data;
 }
 
-bool TOutput::QuitRequested()
+bool
+TOutput::QuitRequested()
 {
 	for(int i=1;i<=3;i++)
 	{

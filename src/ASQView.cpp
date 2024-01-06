@@ -1,6 +1,19 @@
 // 
 // ASQView.cpp 
 // 
+
+#include <Alert.h>
+#include <Box.h>
+#include <PopUpMenu.h>
+#include <Menu.h>
+#include <MenuField.h>
+#include <MenuItem.h>
+#include <Message.h>
+#include <MidiDefs.h>
+#include <Rect.h>
+#include <StorageKit.h>
+#include <TextControl.h>
+
 #include "Bitmaps.h"
 #include "ASQView.h"
 #include "TVolumenob.h"
@@ -12,20 +25,10 @@
 #include "TMenuField.h"
 #include "TMidioutMenuField.h"
 #include "TOutputMenuField.h"
-#include <Alert.h>
-#include <Box.h>
-#include <PopUpMenu.h>
-#include <Menu.h>
-#include <MenuItem.h>
-#include <MenuField.h>
-#include <Rect.h>
-#include <Message.h>
-#include <MidiDefs.h>
-#include <TextControl.h>
-#include <StorageKit.h>
 
 ASQView::ASQView( BRect frame, const char* name ) 
-    :BView( frame, "sampleview", B_FOLLOW_ALL, B_WILL_DRAW ) 
+	:
+	BView( frame, "sampleview", B_FOLLOW_ALL, B_WILL_DRAW ) 
 { 
 	message_from_tracker 	= NULL;																				// Initialisierung
 	drag_file_ok 					= false;																			// kein File gedraggt
@@ -43,12 +46,12 @@ ASQView::ASQView( BRect frame, const char* name )
     nowstepping= FALSE;
     now = 11;
     noofon=0;
-		
-		output=new TOutput(this, name);
+	output=new TOutput(this, name);
 	
 } 
 
-void ASQView::AttachedToWindow() 
+void
+ASQView::AttachedToWindow() 
 { 
 	
 	int i;
@@ -301,7 +304,8 @@ void ASQView::AttachedToWindow()
     be_app->PostMessage('refs');
 } 
 
-void ASQView::MessageReceived(BMessage* message) 
+void
+ASQView::MessageReceived(BMessage* message) 
 { 
    switch(message->what)
    {
@@ -340,7 +344,8 @@ void ASQView::MessageReceived(BMessage* message)
    
 } 
 
-void ASQView::Draw( BRect rect ) 
+void
+ASQView::Draw( BRect rect ) 
 { 
     SetFontSize(9);
     MovePenTo( 3, 15 ); 
@@ -419,7 +424,8 @@ void ASQView::Draw( BRect rect )
 
 
 
-void ASQView :: MouseMoved(BPoint point, uint32 state, const BMessage *message)// drag&drop #1  tracker -> appl
+void
+ASQView::MouseMoved(BPoint point, uint32 state, const BMessage *message)// drag&drop #1  tracker -> appl
 {
 	if (message == NULL) return;			// wichtig, sonst Absturz
 
@@ -455,7 +461,8 @@ void ASQView :: MouseMoved(BPoint point, uint32 state, const BMessage *message)/
 }
 
 
-void ASQView :: MouseUp(BPoint)																		
+void
+ASQView::MouseUp(BPoint)																		
 {
 	drag_file_ok 					= false;
 	message_from_tracker 	= NULL;
@@ -465,7 +472,8 @@ void ASQView :: MouseUp(BPoint)
 
 
 
-void ASQView::SaveData(BMessage* message)
+void
+ASQView::SaveData(BMessage* message)
 {
 	char buffer[255];
 	BFile* file;
@@ -570,7 +578,8 @@ void ASQView::SaveData(BMessage* message)
 
 }
 
-void ASQView::LoadData(BMessage *message)
+void
+ASQView::LoadData(BMessage *message)
 {
 	int i;
 	char buffer[1025];
@@ -734,7 +743,8 @@ void ASQView::LoadData(BMessage *message)
 
 }
 
-void ASQView::SaveSMFData(BMessage* message){
+void
+ASQView::SaveSMFData(BMessage* message){
 	uchar buffer[1024];
 	BFile* file;
     entry_ref* ref;

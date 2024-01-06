@@ -4,6 +4,8 @@
 #ifndef TPARROT_H
 #define TPARROT_H
 #include <Looper.h>
+#include <View.h>
+
 class BLooper;
 
 class Tparrot : public BLooper

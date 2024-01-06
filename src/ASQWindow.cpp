@@ -1,16 +1,20 @@
 // ASQWindow.cpp
 //
-#include "ASQWindow.h"
-#include <InterfaceKit.h>
 #include <Application.h>
-#include <StorageKit.h>
+#include <Catalog.h>
+#include <InterfaceKit.h>
+#include <LayoutBuilder.h>
 #include <Roster.h>
+#include <StorageKit.h>
 
-//#include <Messenger.h>
+#include "ASQWindow.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ASQWindow"
 
 ASQWindow::ASQWindow( BRect frame , const char* n)
-    :BWindow( frame, n, B_TITLED_WINDOW, B_NOT_RESIZABLE|B_NOT_ZOOMABLE )
+    :
+	BWindow( frame, n, B_TITLED_WINDOW, B_NOT_RESIZABLE|B_NOT_ZOOMABLE )
 {
 	BMenuBar *menubar;
 	BMessage* msg;
@@ -24,70 +28,65 @@ ASQWindow::ASQWindow( BRect frame , const char* n)
 
 	BPoint rigthbottom(width, height);
 	viewFrame.SetRightBottom(rigthbottom);
-
-	BRect r(0, 0, 640, 19);
+	
 	BMenu* file;
 	//BMenu* edit;
 	//BMenu* prefs;
 	BMenuItem* item;
-	file = new BMenu("File");
+	file = new BMenu(B_TRANSLATE("File"));
 
-	msg = new BMessage('open');
-	item = new BMenuItem("Open...",msg,'O');
+	item = new BMenuItem(B_TRANSLATE("Open..."),new BMessage('open'),'O');
 	file->AddItem(item);
 
-	msg = new BMessage('save');
-	saveitem = new BMenuItem("Save",msg,'S');
+	saveitem = new BMenuItem(B_TRANSLATE("Save"),new BMessage('save'),'S');
 	file->AddItem(saveitem);
 	saveitem->SetEnabled(false);
-	msg = new BMessage('sset');
 
-	item = new BMenuItem("Save as...",msg,'S',B_SHIFT_KEY);
+	item = new BMenuItem(B_TRANSLATE("Save as..."),new BMessage('sset'),'S',B_SHIFT_KEY);
 	file->AddItem(item);
-	msg = new BMessage('ssmf');
 
-	item = new BMenuItem("Save as SMF...",msg,'M',B_SHIFT_KEY);
+	item = new BMenuItem(B_TRANSLATE("Save as SMF..."),new BMessage('ssmf'),'M',B_SHIFT_KEY);
 	file->AddItem(item);
 
 	file->AddSeparatorItem();
 
-	msg = new BMessage(B_ABOUT_REQUESTED);
-	item = new BMenuItem("About...",msg);
+	item = new BMenuItem(B_TRANSLATE("About..."),new BMessage(B_ABOUT_REQUESTED));
 	file->AddItem(item);
 
 	file->AddSeparatorItem();
 
-	msg = new BMessage(B_QUIT_REQUESTED);
-	item = new BMenuItem("Close",msg,'W');
+	item = new BMenuItem(B_TRANSLATE("Close"),new BMessage(B_QUIT_REQUESTED),'W');
 	file->AddItem(item);
 
-	msg = new BMessage(B_QUIT_REQUESTED);
-	item = new BMenuItem("Quit",msg,'Q');
+	item = new BMenuItem(B_TRANSLATE("Quit"),new BMessage(B_QUIT_REQUESTED),'Q');
 	file->AddItem(item);
 
 	//edit = new BMenu("Edit");
 	//prefs = new BMenu("Prefs");
-	menubar = new BMenuBar(r, "menubar",B_FOLLOW_LEFT_RIGHT | B_FOLLOW_TOP,
-	                       B_ITEMS_IN_ROW, false);
+	menubar = new BMenuBar("menubar");
 	menubar->AddItem(file);
 	//menubar->AddItem(edit);
 	//menubar->AddItem(prefs);
-	AddChild(menubar);
     view = new ASQView( viewFrame, n );
-    AddChild( view );
+
+	BLayoutBuilder::Group<>(this, B_VERTICAL, 0)
+	.Add(menubar)
+	.Add(view)
+	.End();
+	
     BMessenger *target;
     target = new BMessenger(this);
     savepanel = new BFilePanel(B_SAVE_PANEL,target);
     savepanel->SetSaveText("untitled.Q");
 
   	//look in CWD
-		app_info info;
-  	BPath 		path;
+	app_info info;
+  	BPath path;
   	be_app->GetAppInfo(&info);
   	BEntry entry(&info.ref);
   	entry.GetPath(&path);
   	path.GetParent(&path);
-		savepanel -> SetPanelDirectory(path.Path());
+	savepanel -> SetPanelDirectory(path.Path());
 
 
     target = new BMessenger(this);
@@ -104,16 +103,19 @@ ASQWindow::ASQWindow( BRect frame , const char* n)
 
 }
 
-bool ASQWindow::QuitRequested(){
+bool
+ASQWindow::QuitRequested()
+{
 	view->timer->PostMessage( B_QUIT_REQUESTED );
  	snooze(20000);
  	view->output->PostMessage( B_QUIT_REQUESTED );
  	snooze(20000);
- 	(BApplication*)be_app->PostMessage( B_QUIT_REQUESTED );
+ 	be_app->PostMessage( B_QUIT_REQUESTED );
     return true;
 }
 
-void ASQWindow::MessageReceived(BMessage* message)
+void
+ASQWindow::MessageReceived(BMessage* message)
 {
 
 	switch(message->what)
@@ -187,7 +189,8 @@ void ASQWindow::MessageReceived(BMessage* message)
 
 
 
-bool MyOpenFilter :: Filter(const entry_ref* ref,BNode* node,
+bool
+MyOpenFilter::Filter(const entry_ref* ref,BNode* node,
 														struct stat_beos* st,const char* filetype)
 {
 	// hier wird eine Filterfunktion implementiert
